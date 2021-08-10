@@ -8,12 +8,13 @@ import {auth} from './firebase';
 
 function Header() {
     const [{user, basket}] = useStateValue();
-
+    
     const login = () => {
-        if(user){
+        if(auth){
             auth.signOut();
         }
     }
+
     return (
         <nav className="header">
             <Link to="/">
