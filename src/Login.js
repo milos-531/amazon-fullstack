@@ -1,53 +1,126 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import './Login.css';
-import {Link, useHistory} from 'react-router-dom';
-import {auth} from './firebase';
+import { Link, useHistory } from 'react-router-dom';
+import { useStateValue } from './StateProvider';
 
 function Login() {
 
     const history = useHistory();
-    const[email, setEmail] = useState('');
-    const[name, setName] = useState('');
-    const[password, setPassword] = useState('');
-    const login = event => {
-        event.preventDefault();
+    const [email, setEmail] = useState('');
+    const [name, setName] = useState('');
+    const [password, setPassword] = useState('');
+    const [{ user }, dispatch] = useStateValue();
 
-        auth.signInWithEmailAndPassword(email, password)
-            .then((auth) => {
-                history.push("/");
-            })
-            .catch(e => alert(e.message));
-    }
-    async function register(){
+    async function login() {
 
-
-        if(!name){
-            document.getElementById("name").style.borderColor = "red";
-            alert("Name is required for registration.")
+        let ok = true;
+        if (!email) {
+            document.getElementById("email").style.borderColor = "red";
+            ok = false;
+        } else {
+            document.getElementById("email").style.borderColor = "white";
         }
-        else{
-            document.getElementById("name").style.borderColor = "white";
-            let item = {name, email, password}
-            let result = await fetch("http://localhost:8000/api/register",{
-                method:"POST",
-                body:JSON.stringify(item),
-                headers:{
-                    "Content-Type" : "application/json",
-                    "Accept" : "application/json"
-                }
-            })
-
-            result = await result.json();
-
-            if(result === 0){
-                alert("Registration failed, this email is occupied.");
-            } else{
-                alert("Success, your account has been created.");
-                let account = {email, name};
-                localStorage.setItem("user-info",JSON.stringify(result));
-                history.push("/");
+        if (!password) {
+            document.getElementById("password").style.borderColor = "red";
+            ok = false;
+        } else {
+            document.getElementById("password").style.borderColor = "white";
+        }
+        if (!ok) {
+            return;
+        }
+        let item = { email, password }
+        let res = await fetch("http://localhost:8000/api/login", {
+            method: "POST",
+            body: JSON.stringify(item),
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
             }
+        })
+
+        res = await res.json();
+
+        if (res === 0) {
+            alert("Login failed, invalid credentials.");
+            return;
         }
+
+        dispatch({
+            type: "SET_USER",
+            user: res
+        })
+        let id = res.id;
+        let resCart = await fetch("http://localhost:8000/api/cartlist/"+id, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        })
+
+        resCart = await resCart.json();
+        resCart.forEach(item => {
+            dispatch({
+                type: 'ADD_TO_BASKET',
+                item: {
+                    id: item.id,
+                    title: item.name,
+                    image: item.image,
+                    price: item.price,
+                    rating: item.rating
+                },
+            })
+        });
+        history.push("/");
+    }
+
+    async function register() {
+
+        let ok = true;
+        if (!email) {
+            document.getElementById("email").style.borderColor = "red";
+            ok = false;
+        } else {
+            document.getElementById("email").style.borderColor = "white";
+        }
+        if (!password) {
+            document.getElementById("password").style.borderColor = "red";
+            ok = false;
+        } else {
+            document.getElementById("password").style.borderColor = "white";
+        }
+        if (!name) {
+            document.getElementById("name").style.borderColor = "red";
+            ok = false;
+        } else {
+            document.getElementById("name").style.borderColor = "white";
+        }
+        if (!ok) {
+            alert("All fields are required for registration.");
+            return;
+        }
+
+        document.getElementById("name").style.borderColor = "white";
+        let item = { name, email, password }
+        let result = await fetch("http://localhost:8000/api/register", {
+            method: "POST",
+            body: JSON.stringify(item),
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        })
+
+        result = await result.json();
+
+        if (result === 0) {
+            alert("Registration failed, this email is occupied.");
+        } else {
+            alert("Success, your account has been created.");
+            history.push("/");
+        }
+
     }
     return (
         <div className="login">
@@ -58,12 +131,12 @@ function Login() {
                 <h1>Sign in</h1>
                 <form>
                     <h5>E-mail</h5>
-                    <input type="email" value={email} onChange={event => setEmail(event.target.value)}/>
+                    <input type="email" id="email" value={email} onChange={event => setEmail(event.target.value)} required />
                     <h5>Password</h5>
-                    <input type="password" value={password}  onChange={event => setPassword(event.target.value)}/>
+                    <input type="password" id="password" value={password} onChange={event => setPassword(event.target.value)} required />
                     <h5>Name</h5>
-                    <input type="text" id="name" value={name} onChange={event => setName(event.target.value)}/>
-                    <button onClick={login} type="submit" className="login__signInButton">Sign in</button>
+                    <input type="text" id="name" value={name} onChange={event => setName(event.target.value)} />
+                    <button onClick={login} type="button" className="login__signInButton">Sign in</button>
                 </form>
                 <p>By signing in you agree to Amazon's Conditions of Use & Sale.
                     Please see our Privacy Notice, our Cookies Notice and our Interest-based Ads Notice.

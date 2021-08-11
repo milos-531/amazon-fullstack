@@ -3,13 +3,13 @@ export const initialState = {
     user: null,
 };
 
-export const getBasketTotal = (basket) => 
-basket?.reduce((amount, item) => item.price + amount, 0);
+export const getBasketTotal = (basket) =>
+    basket?.reduce((amount, item) => item.price + amount, 0);
 
 
-function reducer(state, action){
+function reducer(state, action) {
     //console.log(action);
-    switch(action.type){
+    switch (action.type) {
         case 'SET_USER':
 
             return {
@@ -18,19 +18,26 @@ function reducer(state, action){
             }
         case 'ADD_TO_BASKET':
 
-            return{
+            return {
                 ...state,
                 basket: [...state.basket, action.item],
             };
+        case 'EMPTY_BASKET':
+
+            let empty = [];
+            return {
+                ...state,
+                basket: empty,
+            };
         case 'REMOVE_FROM_BASKET':
-            
+
             let newBasket = [...state.basket];
             const index = state.basket.findIndex((basketItem) => basketItem.id === action.id);
-            if(index >= 0){
-                newBasket.splice(index,1);
+            if (index >= 0) {
+                newBasket.splice(index, 1);
             }
 
-            return{...state, basket: newBasket,};
+            return { ...state, basket: newBasket, };
         default:
             return state;
 
