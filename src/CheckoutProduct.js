@@ -4,8 +4,26 @@ import { useStateValue } from './StateProvider';
 
 function CheckoutProduct({id, title, price, rating, image}) {
 
-    const [{basket},dispatch] = useStateValue();
-    const removeFromBasket = () =>{
+    const [{user},dispatch] = useStateValue();
+    async function removeFromBasket(){
+        let user_id = user?.id;
+        let product_id = id;
+        let item = { user_id, product_id }
+        let result = await fetch("http://localhost:8000/api/remove_from_cart", {
+            method: "POST",
+            body: JSON.stringify(item),
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        })
+
+        result = await result.json();
+
+        if (result != 1) {
+            alert(result);
+            return;
+        }
         dispatch({
             type: "REMOVE_FROM_BASKET",
             id: id,
