@@ -1,13 +1,13 @@
 import React from 'react'
 import "./Header.css"
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import SearchIcon from '@material-ui/icons/Search';
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import { useStateValue } from './StateProvider';
 
 function Header() {
     const [{user, basket}, dispatch] = useStateValue();
-    
+    const history = useHistory();
     const login = () => {
         if(user){
             dispatch({
@@ -19,15 +19,19 @@ function Header() {
               });
         }
     }
-
+    const search = () => {
+        let url = "/search/" + document.getElementById("searchBar").value;
+        history.push(url);
+    }
     return (
         <nav className="header">
             <Link to="/">
                 <img className="header__logo" src="http://pngimg.com/uploads/amazon/amazon_PNG11.png" alt=""/>
             </Link>
             <div class="header__search">
-                <input type="text" className="header__searchInput" />
-                <SearchIcon className="header__searchIcon" />
+                <input type="text" id="searchBar" className="header__searchInput" />
+                
+                <SearchIcon className="header__searchIcon" onClick={search}/>
             </div>
             <div class="header__nav">
                 {/* 1st link */}

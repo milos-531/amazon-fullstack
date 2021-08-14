@@ -1,0 +1,37 @@
+.search__content{
+    display: flex;
+}
+.search__title{
+    background-color: white;
+    border-bottom: 2px solid #ddd;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 25%;
+    font-size: 17px;
+    font-weight: 600;
+}
+.search__query{
+    color: #c45500 !important;
+}
+.search__left{
+    position: relative;
+    width: 25%;
+    border-right: 2px solid #ddd;
+
+}
+.search__right{
+    width: 50%;
+}
+.search__sortButtons{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    right: 0;
+}
+.search__sortButton{
+    padding: 5px;
+    margin: 5px;
+    border: 2px solid #ddd;
+    background-color: #cd9042;
+    float: right;
+}

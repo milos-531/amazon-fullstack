@@ -1,0 +1,31 @@
+.searchProduct{
+    display: flex;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    border-bottom: 2px solid #ddd;
+    background-color: white;
+}
+.searchProduct__image{
+    object-fit: contain;
+    width: 180px;
+    height: 180px;
+}
+.searchProduct__info{
+    padding-left: 20px;
+    position: relative;
+}
+.searchProduct__addToCartButton{
+    background-color: #f0c14b;
+    border: 1px solid;
+    border-color: #a88734 #9c7e31 #846a29;
+    position: absolute;
+    bottom: 0;
+}
+.searchProduct__rating{
+    display: flex;
+}
+.searchProduct__title{
+    font-size: 17px;
+    font-weight: 800;
+}

@@ -84,10 +84,7 @@ class Home extends Component {
             })
                 .then(response => { return response.json(); })
                 .then(responseData => {
-                    console.log(responseData);
                     products = responseData;
-                    console.log("++++++++++++++++++++++++++++++++++++++");
-                    console.log(products);
                     this.forceUpdate();
                 });
         }

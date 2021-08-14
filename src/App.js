@@ -9,6 +9,7 @@ import Header from "./Header";
 import Home from "./Home";
 import Checkout from './Checkout';
 import Login from './Login';
+import Search from './Search';
 import { useStateValue } from "./StateProvider";
 
 function App() {
@@ -25,6 +26,10 @@ function App() {
         </Route>
         <Route path="/login">
           <Login />
+        </Route>
+        <Route path="/search/:query">
+          <Header/>
+          <Search/>
         </Route>
         {/* HOMEPAGE */}
         <Route path="/">

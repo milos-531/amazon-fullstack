@@ -1,8 +1,10 @@
-import React from 'react'
-import './Product.css';
-import { useStateValue } from './StateProvider';
+import React from 'react';
+import "./SearchProduct.css";
 import {Link} from "react-router-dom";
-function Product({id, title, image, price, rating}) {
+import { useStateValue } from './StateProvider';
+
+function SearchProduct({id, title, price, rating, image, description}) {
+
     const [{user}, dispatch] = useStateValue();
     async function addToBasket(){
 
@@ -36,14 +38,16 @@ function Product({id, title, image, price, rating}) {
         })
     };
     return (
-        <div className="product">
-            <div class="product__info">
-                <p>{title}</p>
-                <p class="product__price">
+        <div className="searchProduct">
+            <img className="searchProduct__image" src={image} alt="" />
+            <div class="searchProduct__info">
+                <p class="searchProduct__title">{title}</p>
+                <p class="searchProduct__description">{description}</p>
+                <p class="searchProduct__price">
                     <small>$</small>
                     <strong>{price}</strong>
                 </p>
-                <div class="product__rating">
+                <div class="searchProduct__rating">
                     {
                         Array(rating)
                             .fill()
@@ -52,13 +56,12 @@ function Product({id, title, image, price, rating}) {
                             )
                     }
                 </div>
+                <Link to={!user && "/login"}>
+                    <button onClick={user && addToBasket} className="searchProduct__addToCartButton">Add to basket</button>
+                </Link>
             </div>
-            <img src={image} alt="" />
-            <Link to={!user && "/login"}>
-                <button onClick={user && addToBasket} className="product__addToCartButton">Add to basket</button>
-            </Link>
         </div>
     )
 }
 
-export default Product
+export default SearchProduct
