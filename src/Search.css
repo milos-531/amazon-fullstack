@@ -17,10 +17,10 @@
     position: relative;
     width: 25%;
     border-right: 2px solid #ddd;
-
 }
 .search__right{
     width: 50%;
+    border-right: 2px solid #ddd;
 }
 .search__sortButtons{
     display: flex;
@@ -32,6 +32,6 @@
     padding: 5px;
     margin: 5px;
     border: 2px solid #ddd;
-    background-color: #cd9042;
+    background-color: white;
     float: right;
 }

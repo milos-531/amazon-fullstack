@@ -1,0 +1,24 @@
+.orders{
+    max-width: 1500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.orders__image{
+    position: relative;
+    width: 100%;
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+    z-index: -1;
+    margin-bottom: -300px;
+}
+.orders__content{
+    position: relative;
+    background-color: white;
+    margin-left: 50px;
+    margin-right: 50px;
+    padding: 25px;
+    z-index: 1;
+}
+.orders__products > h3 {
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 5px;
+}
