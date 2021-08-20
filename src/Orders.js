@@ -9,6 +9,9 @@ function Orders() {
         getOrders();
     }, []);
     function getOrders(){
+        if(!user){
+            return;
+        }
         fetch("http://localhost:8000/api/getorders/" + user.id, {
             method: "GET",
             headers: {

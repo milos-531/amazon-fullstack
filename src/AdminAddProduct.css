@@ -1,0 +1,35 @@
+.adminaddproduct{
+    background-color: white;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.adminaddproduct__newproduct{
+    margin-top: 50px;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border: 1px solid lightgray;
+}
+.adminaddproduct__button{
+    background-color: #f0c14b;
+    border-radius: 2px;
+    width: 100%;
+    height: 30px;
+    border: 1px solid;
+    margin-top: 10px;
+    border-color: #a88734 #9c7e31 #846a29;
+    color: #111;
+}
+.adminaddproduct__newproduct > input, select {
+    height: 30px;
+    margin-bottom: 10px;
+    background-color: white;
+    width: 98%;
+}
+.adminaddproduct__newproduct > h1 {
+    font-weight: 500;
+    margin-bottom: 20px;
+}

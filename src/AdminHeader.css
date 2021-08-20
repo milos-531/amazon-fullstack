@@ -1,0 +1,45 @@
+.adminheader{
+    background-color: #131921;
+    display: flex;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.adminheader__logo{
+    width: 100px;
+    object-fit: contain;
+    margin: 0 20px;
+    margin-top: 18px;
+}
+
+.adminheader__nav{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    position: absolute;
+    right: 0;
+    padding-right: 10px;
+}
+
+.adminheader__link{
+    color: white;
+    text-decoration: none;
+}
+
+.adminheader__option{
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.adminheader__optionLineOne{
+    font-size: 10px;
+}
+.adminheader__optionLineTwo{
+    font-size: 13px;
+    font-weight: 800;
+}
+

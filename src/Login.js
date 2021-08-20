@@ -10,7 +10,7 @@ function Login() {
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
     const [{ user }, dispatch] = useStateValue();
-
+    const axios = require('axios');
     async function login() {
 
         let ok = true;
@@ -50,29 +50,35 @@ function Login() {
             type: "SET_USER",
             user: res
         })
-        let id = res.id;
-        let resCart = await fetch("http://localhost:8000/api/cartlist/"+id, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            }
-        })
-
-        resCart = await resCart.json();
-        resCart.forEach(item => {
-            dispatch({
-                type: 'ADD_TO_BASKET',
-                item: {
-                    id: item.id,
-                    title: item.name,
-                    image: item.image,
-                    price: item.price,
-                    rating: item.rating
-                },
+        if(res.role === "user"){
+            let id = res.id;
+            let resCart = await fetch("http://localhost:8000/api/cartlist/"+id, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                }
             })
-        });
-        history.push("/");
+    
+            resCart = await resCart.json();
+            resCart.forEach(item => {
+                dispatch({
+                    type: 'ADD_TO_BASKET',
+                    item: {
+                        id: item.id,
+                        title: item.name,
+                        image: item.image,
+                        price: item.price,
+                        rating: item.rating
+                    },
+                })
+            });
+            history.push("/");
+        }
+        else if (res.role === "admin"){
+            history.push("/adminhome");
+        }
+
     }
 
     async function register() {
@@ -101,6 +107,25 @@ function Login() {
             return;
         }
 
+        //email validation via https://app.abstractapi.com/api/email-validation/tester
+        let ok2 = true;
+        await axios.get('https://emailvalidation.abstractapi.com/v1/?api_key=5ab01ebb4a894bf58042e962e20de87a&email='+email)
+            .then(response => {
+                console.log(response.data);
+                let deliverability = response.data.deliverability;
+                let quality = response.data.quality_score;
+                if(deliverability !== "DELIVERABLE" && (deliverability !=="UNKNOWN" && quality < 0.90)){
+                    alert("The email: (" + email + ") has been deemed risky or undeliverable. Please enter valid email");
+                    ok2 = false;
+                    return;
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        if(!ok2){
+            return;
+        }
         document.getElementById("name").style.borderColor = "white";
         let item = { name, email, password }
         let result = await fetch("http://localhost:8000/api/register", {

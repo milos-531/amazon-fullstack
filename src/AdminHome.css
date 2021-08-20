@@ -1,0 +1,38 @@
+.adminhome{
+    display: flex;
+    padding: 20px;
+}
+.adminhome__orders{
+    width: 50%;
+    border-right: 2px solid #ddd;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+.adminhome__products{
+    width: 50%;
+    border-left: 2px solid #ddd;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+.adminhome__buttons > button{
+    background-color: #f0c14b;
+    border: 1px solid;
+    border-color: #a88734 #9c7e31 #846a29;
+}
+.adminhome__buttons{
+    padding-bottom: 5px;
+}
+.adminhome__list{
+    background-color: white;
+    padding: 10px;
+    margin: 10px;
+}
+.divider{
+    width: 5px;
+    height:auto;
+    display:inline-block;
+}

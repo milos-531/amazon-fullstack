@@ -12,8 +12,10 @@ import Login from './Login';
 import Search from './Search';
 import Orders from './Orders';
 import ConfirmOrder from "./ConfirmOrder";
+import AdminHome from "./AdminHome";
 import { useStateValue } from "./StateProvider";
-
+import AdminHeader from "./AdminHeader";
+import AdminAddProduct from "./AdminAddProduct";
 function App() {
 
   const [{ user }, dispatch] = useStateValue();
@@ -40,6 +42,14 @@ function App() {
           <Route path="/confirmorder">
             <Header />
             <ConfirmOrder />
+          </Route>
+          <Route path="/adminhome">
+            <AdminHeader />
+            <AdminHome />
+          </Route>
+          <Route path="/adminaddproduct">
+            <AdminHeader />
+            <AdminAddProduct />
           </Route>
           {/* HOMEPAGE */}
           <Route path="/">
