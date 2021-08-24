@@ -83,7 +83,7 @@ function AdminHome() {
             .then(response => { return response.json(); })
             .then(responseData => {
                 if (responseData === -1) {
-                    alert("Only administrators may access backend data");
+                    alert("You cannot remove products awaiting delivery.");
                     return;
                 }
                 setProducts(responseData);
